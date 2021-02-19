@@ -22,9 +22,9 @@ class MyHomePage1 extends StatelessWidget {
         // 用一个简单的Get.to()即可代替Navigator.push那8行，无需上下文！
         body: Center(child: RaisedButton(
             child: Text("Go to Other"), onPressed: () {
-            // Get.to(Other());
+            Get.to(Other());
             // 注意此处注释
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Other()),);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => Other()),);
           })),
         floatingActionButton:
         FloatingActionButton(child: Icon(Icons.add), onPressed: c.increment));
@@ -39,6 +39,15 @@ class Controller1 extends GetxController{
 class Other extends StatelessWidget {
   @override
   Widget build(context){
+
+    return GetBuilder<Controller1>(
+      init: Controller1(), // 首次启动
+      builder: (c1) => Scaffold(body: Center(child: Text("${c1.count}")),
+          floatingActionButton:
+          FloatingActionButton(child: Icon(Icons.add), onPressed: c1.increment)
+      ),
+    );
+
     final Controller1 c1 = Get.put(Controller1());
     // 访问更新后的计数变量
     return Scaffold(body: Center(child: Obx(() => Text("${c1.count}"))),
